@@ -1,0 +1,8 @@
+---
+- name: running script to echo a file content
+  hosts: all
+  become: yes
+  tasks:
+    - name: script content
+      script: /home/ubuntu/ansible/a.sh
+

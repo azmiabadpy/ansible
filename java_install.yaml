@@ -1,0 +1,8 @@
+- name: installing java
+  hosts: server1
+  become: yes
+  tasks:
+    - name: installing java
+      apt:
+        name: openjdk-11-jdk
+        state: present

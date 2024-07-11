@@ -1,0 +1,33 @@
+---
+- name: installing apache server
+  hosts: server1
+  become: true
+  tasks: 
+   - name: updating cache apache
+     apt:
+       update_cache: yes
+   - name: installing apache
+     apt: 
+       name: apache2
+       state: present  
+       
+   - name: starting apache server
+     service:
+       name: apache2
+       state: started
+       enabled: yes
+
+   - name: copy the index file
+     copy:
+       src: /home/ubuntu/ansible/index.html
+       dest: /var/www/html/index.html
+       owner: www-data  # or apache for Red Hat-based systems
+       group: www-data  # or apache for Red Hat-based systems
+       mode: '0644'
+     notify: restart apache  
+   
+  handlers:       
+    - name: restart apache
+      service:
+        name: apache2
+        state: restarted     
